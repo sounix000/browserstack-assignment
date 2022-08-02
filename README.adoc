@@ -9,11 +9,11 @@ Lorem Ipsum
 == Prerequisites
 Lorem Ipsum
 
-== Automating test using Selenium and Python
+== Creating test automation script using Selenium and Python
 Lorem Ipsum
 
 == Integrating the script with BrowserStack
 Lorem Ipsum
 
-== Automatically running the script using GitHub Actions
+== Automatically running modified script using GitHub Actions
 Lorem Ipsum
