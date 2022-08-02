@@ -1,0 +1,7 @@
+= Automated testing of Amazon sign in page
+Using Selenium (Python), BrowserStack, and GitHub Actions
+:toc: left
+:toc-title: In this article:
+:toclevels: 4
+
+== Lorem Ipsum
