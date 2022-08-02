@@ -1,7 +1,6 @@
 = Automated testing of Amazon sign in page
 Using Selenium (Python), BrowserStack, and GitHub Actions
 :toc: left
-:toc-title: Table of Contents
 :toclevels: 4
 
 == Overview
