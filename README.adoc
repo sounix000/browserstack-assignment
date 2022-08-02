@@ -1,5 +1,5 @@
-= Using Selenium (Python), BrowserStack, and GitHub Actions to automate testing of Amazon sign in page
-
+= Automated testing of Amazon sign in page
+Using Selenium (Python), BrowserStack, and GitHub Actions
 :toc: left
 :toclevels: 4
 
