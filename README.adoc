@@ -1,4 +1,4 @@
-= Automated testing of Amazon sign in page
+= Automated testing of Amazon **Sign in** page
 Using Selenium (Python), BrowserStack, and GitHub Actions
 :toc: left
 :toclevels: 4
