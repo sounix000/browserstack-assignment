@@ -4,4 +4,17 @@ Using Selenium (Python), BrowserStack, and GitHub Actions
 :toc-title: Table of Contents
 :toclevels: 4
 
-== Lorem Ipsum
+== Overview
+Lorem Ipsum
+
+== Prerequisites
+Lorem Ipsum
+
+== Automating test using Selenium and Python
+Lorem Ipsum
+
+== Integrating the script with BrowserStack
+Lorem Ipsum
+
+== Automatically running the script using GitHub Actions
+Lorem Ipsum
