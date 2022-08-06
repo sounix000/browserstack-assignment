@@ -1,16 +1,252 @@
 = Automated testing of Amazon **Sign in** page
 Using Selenium (Python), BrowserStack, and GitHub Actions
+:nofooter:
 :toc: left
 :toclevels: 4
+:source-highlighter: highlight.js
 
 == Overview
 Lorem Ipsum
 
-== Prerequisites
-Lorem Ipsum
+[NOTE]
+====
+All command examples and code snippets included in this tutorial have been tested on a local machine running the `Fedora 35` operating system. Whenever necessary, modify the commands and code snippets according to your machine's operating system and package manager.
+====
+
+== Preparing the local machine
+
+Before creating the test automation script, ensure that your local machine has all necessary dependencies.
+
+. Check the `Python` and `pip` version available on you system.
++
+[source,terminal]
+----
+$ python --version
+Python 3.10.5
+
+$ which python
+/usr/bin/python
+
+$ pip --version
+pip 21.2.3 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+----
++
+If unavailable, install them on your local machine.
+
+. Install the `selenium` package using `pip`.
++
+[source,terminal]
+----
+$ pip install selenium
+----
+
+. Check the version of Google Chrome on your machine by running `chrome://version/` on the browser's search bar. Note the version, such as `Google Chrome:	104.0.5112.79 (Official Build) (64-bit)`. 
+
+. Check the version of any `chromedriver` package installed on your system. 
++
+[source,terminal]
+----
+$ chromedriver --version
+ChromeDriver 96.0.4664.45 (76e4c1bb2ab4671b8beba3444e61c0f17584b2fc-refs/branch-heads/4664@{#947})
+----
+
+. If the version of the `chromedriver` package is older than the Google Chrome version, remove the `chromedriver` package.
++
+[source,terminal]
+----
+$ which chromedriver
+~/bin/chromedriver
+
+$ rm ~/bin/chromedriver
+----
+
+. Install the `chromedriver` package that matches the Google Chrome version. 
+.. Download the correct version for your system from the link:https://chromedriver.chromium.org/downloads[Chromium website].
+.. Unzip the downloaded file and navigate to the resulting directory.
+.. Copy the `chromedriver` binary to any location supported by your `$PATH` variable.
 
 == Creating test automation script using Selenium and Python
-Lorem Ipsum
+
+. Sign in to your GitHub account.
+
+. Fork the GitHub repository link:https://github.com/sounix000/browserstack-assignment[https://github.com/sounix000/browserstack-assignment].
+
+. Clone the forked repository in your local machine. 
++
+[source,terminal]
+----
+$ git clone git@github.com:<your_github_username>/browserstack-assignment.git
+----
+
+. Navigate to the project directory.
++
+[source,terminal]
+----
+$ cd browserstack-assignment/
+----
+
+. Open the project directory using your favorite text editor or IDE.
+
+. Modify the `test_automation_script.py` file to include the email id registered with Amazon.
++
+[source,python]
+----
+# Email registered with Amazon
+EMAIL_ID = "<email_registered_with_Amazon>"
+----
+
+. Create a file named `password.txt`, and save your Amazon password in it.
+
+. Run the file `test_automation_script.py`.
++
+[source,terminal]
+----
+$ python test_automation_script.py
+----  
+
+== Understanding the test automation script
+
+The Python script `test_automation_script.py` programmatically does the following operations:
+
+. Import necessary Python packages.
++
+[%collapsible]
+====
+[,python]
+----
+from selenium.webdriver import Chrome
+import time # The function time.sleep() helps mask the scripted bot behavior.
+----
+====
+
+. Define a function that mimics the human typing of username, password, and other such fields on a web page.
++
+[%collapsible]
+====
+[,python]
+----
+# Helper function to mimic slow typing by a human
+def slow_typing(element, text):
+    for character in text: 
+        element.send_keys(character)
+        time.sleep(0.3)
+----
+====
+
+. Access the email id and password for the Amazon account used for test.
++
+[%collapsible]
+====
+[,python]
+----
+# Email registered with Amazon
+EMAIL_ID = "<email_registered_with_Amazon>"
+
+# Read password from a text file and add the file to .gitignore
+# Do not hardcode the password for your Amazon account.
+password = ""
+with open('password.txt', 'r') as password_file:
+    password = password_file.read().replace('\n', '')
+----
+====
+
+. Open the Amazon sign in page in the Goggle Chrome browser.
++
+[%collapsible]
+====
+[,python]
+----
+# Open browser and go to sign in page
+browser = Chrome()
+browser.get('https://amazon.in/')
+time.sleep(2)
+sign_in_button = browser.find_element_by_xpath('//*[@id="nav-link-accountList"]/span')
+sign_in_button.click()
+time.sleep(2)
+----
+====
+
+. Enter the sign in credentials while mimicking human interaction with the website.
++
+[%collapsible]
+====
+[,python]
+----
+# Assumption: There are no two-factor authentication enabled
+# Enter the sign in credentials
+username_textbox = browser.find_element_by_id("ap_email")
+slow_typing(username_textbox, EMAIL_ID)
+time.sleep(2)
+
+continue_button = browser.find_element_by_id("continue")
+continue_button.submit()
+time.sleep(2)
+
+password_textbox = browser.find_element_by_id("ap_password")
+slow_typing(password_textbox, password)
+time.sleep(2)
+
+sign_in_button = browser.find_element_by_id("auth-signin-button-announce")
+sign_in_button.submit()
+time.sleep(20)
+
+browser.close()
+----
+====
+
+For convenience, the entire script is given below:
+
+[%collapsible]
+====
+[,python]
+----
+from selenium.webdriver import Chrome
+import time # The function time.sleep() helps mask the scripted bot behavior.
+
+# Helper function to mimic slow typing by a human
+def slow_typing(element, text):
+    for character in text: 
+        element.send_keys(character)
+        time.sleep(0.3)
+
+# Email registered with Amazon
+EMAIL_ID = "<email_registered_with_Amazon>"
+
+# Read password from a text file and add the file to .gitignore
+# Do not hardcode the password for your Amazon account.
+password = ""
+with open('password.txt', 'r') as password_file:
+    password = password_file.read().replace('\n', '')
+
+# Open browser and go to sign in page
+browser = Chrome()
+browser.get('https://amazon.in/')
+time.sleep(2)
+sign_in_button = browser.find_element_by_xpath('//*[@id="nav-link-accountList"]/span')
+sign_in_button.click()
+time.sleep(2)
+
+# Assumption: There are no two-factor authentication enabled
+# Enter the sign in credentials
+username_textbox = browser.find_element_by_id("ap_email")
+slow_typing(username_textbox, EMAIL_ID)
+time.sleep(2)
+
+continue_button = browser.find_element_by_id("continue")
+continue_button.submit()
+time.sleep(2)
+
+password_textbox = browser.find_element_by_id("ap_password")
+slow_typing(password_textbox, password)
+time.sleep(2)
+
+sign_in_button = browser.find_element_by_id("auth-signin-button-announce")
+sign_in_button.submit()
+time.sleep(20)
+
+browser.close()
+----
+====
 
 == Integrating the script with BrowserStack
 Lorem Ipsum
