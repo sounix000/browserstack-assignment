@@ -1,4 +1,4 @@
-= Automated testing of Amazon **Sign in** page
+= Automated testing of **Amazon Sign in** page
 Using Selenium (Python), BrowserStack, and GitHub Actions
 :nofooter:
 :toc: left
@@ -69,7 +69,7 @@ $ rm ~/bin/chromedriver
 
 . Sign in to your GitHub account.
 
-. Fork the GitHub repository link:https://github.com/sounix000/browserstack-assignment[https://github.com/sounix000/browserstack-assignment].
+. Fork the repository link:https://github.com/sounix000/browserstack-assignment[https://github.com/sounix000/browserstack-assignment].
 
 . Clone the forked repository in your local machine. 
 +
