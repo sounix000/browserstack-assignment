@@ -116,6 +116,7 @@ The `local_script.py` Python script facilitates testing the Amazon **Sign in** p
 
 . Import necessary Python packages.
 +
+.Code
 [%collapsible]
 ====
 [,python]
@@ -129,6 +130,7 @@ from dotenv import load_dotenv
 
 . Define a function that mimics the human typing of username, password, and other such fields on a web page.
 +
+.Code
 [%collapsible]
 ====
 [,python]
@@ -143,6 +145,7 @@ def slow_typing(element, text):
 
 . Define the Amazon website URL.
 +
+.Code
 [%collapsible]
 ====
 [,python]
@@ -155,6 +158,7 @@ AMZ_URL = "https://amazon.in/"
 
 . Access the email id and password for the Amazon account used for test.
 +
+.Code
 [%collapsible]
 ====
 [,python]
@@ -170,6 +174,7 @@ AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
 
 . Open the Amazon sign in page in the Goggle Chrome browser.
 +
+.Code
 [%collapsible]
 ====
 [,python]
@@ -186,6 +191,7 @@ time.sleep(2)
 
 . Enter the sign in credentials while mimicking human interaction with the website.
 +
+.Code
 [%collapsible]
 ====
 [,python]
@@ -214,6 +220,7 @@ browser.close()
 
 For convenience, the entire script is given below:
 
+.Code
 [%collapsible]
 ====
 [,python]
@@ -305,6 +312,7 @@ BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
 
 The entire modified script is given below:
 
+.Code
 [%collapsible]
 ====
 [,python]
