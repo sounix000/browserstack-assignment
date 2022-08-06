@@ -13,7 +13,9 @@ Lorem Ipsum
 All command examples and code snippets included in this tutorial have been tested on a local machine running the `Fedora 35` operating system. Whenever necessary, modify the commands and code snippets according to your machine's operating system and package manager.
 ====
 
-== Preparing the local machine
+== Testing on local machine
+
+=== Installing dependencies on the local machine
 
 Before creating the test automation script, ensure that your local machine has all necessary dependencies.
 
@@ -72,7 +74,7 @@ $ rm ~/bin/chromedriver
 .. Unzip the downloaded file and navigate to the resulting directory.
 .. Copy the `chromedriver` binary to any location supported by your `$PATH` variable.
 
-== Creating test automation script using Selenium and Python
+=== Creating test automation script using Selenium and Python
 
 . Sign in to your GitHub account.
 
@@ -111,7 +113,7 @@ EMAIL_ID = "<email_registered_with_Amazon>"
 $ python test_automation_script.py
 ----  
 
-== Understanding the test automation script
+=== Understanding the test automation script
 
 The Python script `test_automation_script.py` programmatically does the following operations:
 
@@ -264,9 +266,27 @@ In the next section of this tutorial, we will modify the script to leverage the 
 
 == Integrating the script with BrowserStack
 
+=== Getting BrowserStack secrets
+
 After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack by performing the following steps:
 
 . link:https://www.browserstack.com/users/sign_up[Sign up] for a trial account of BrowserStack.
+
+. Navigate to your BrowserStack link:https://automate.browserstack.com/dashboard/v2/quick-start/get-started[dashboard].
+
+. From the **ACCESS KEY** dropdown menu, note the values of the **User Name** and **Access Key** fields.
+
+. In the project directory of your local machine, create a `.env` file and save it with the following content:
++
+[source,terminal]
+----
+BROWSERSTACK_USERNAME="<your_browserstack_username>"
+BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
+----
+
+=== Modifying the test script
+
+=== Observing the test results in BrowserStack dashboard
 
 == Automatically running modified script using GitHub Actions
 Lorem Ipsum
