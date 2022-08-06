@@ -502,16 +502,31 @@ $ pip --version
 pip 21.2.3 from /usr/lib/python3.10/site-packages/pip (python 3.10)</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>If unavailable, install them on your local machine.</p>
-</div>
 </li>
 <li>
-<p>Install the <code>selenium</code> package using <code>pip</code>.</p>
+<p>If unavailable, install the necessary packages on your local machine.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ pip install selenium</code></pre>
+<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ sudo dnf install pip
+
+$ pip install selenium==4.1.0
+
+$ pip install python-dotenv</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If any <code>selenium</code> package installed globally has a different version, you can create a <a href="https://docs.python.org/3/library/venv.html">Python virtual environment</a> for the project and install <code>selenium==4.1.0</code> within that virtual environment. Using such best practices isolates project dependencies and avoids conflicting versions.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -785,7 +800,14 @@ browser.close()</code></pre>
 <h2 id="_integrating_the_script_with_browserstack">Integrating the script with BrowserStack</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Lorem Ipsum</p>
+<p>After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack by performing the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://www.browserstack.com/users/sign_up">Sign up</a> for a trial account of BrowserStack.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>

@@ -30,15 +30,22 @@ $ which python
 $ pip --version
 pip 21.2.3 from /usr/lib/python3.10/site-packages/pip (python 3.10)
 ----
-+
-If unavailable, install them on your local machine.
 
-. Install the `selenium` package using `pip`.
+. If unavailable, install the necessary packages on your local machine.
 +
 [source,terminal]
 ----
-$ pip install selenium
+$ sudo dnf install pip
+
+$ pip install selenium==4.1.0
+
+$ pip install python-dotenv
 ----
++
+[TIP]
+====
+If any `selenium` package installed globally has a different version, you can create a link:https://docs.python.org/3/library/venv.html[Python virtual environment] for the project and install `selenium==4.1.0` within that virtual environment. Using such best practices isolates project dependencies and avoids conflicting versions. 
+====
 
 . Check the version of Google Chrome on your machine by running `chrome://version/` on the browser's search bar. Note the version, such as `Google Chrome:	104.0.5112.79 (Official Build) (64-bit)`. 
 
@@ -249,7 +256,10 @@ browser.close()
 ====
 
 == Integrating the script with BrowserStack
-Lorem Ipsum
+
+After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack by performing the following steps:
+
+. link:https://www.browserstack.com/users/sign_up[Sign up] for a trial account of BrowserStack.
 
 == Automatically running modified script using GitHub Actions
 Lorem Ipsum
