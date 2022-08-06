@@ -87,7 +87,7 @@ $ cd browserstack-assignment/
 
 . Open the project directory using your favorite text editor or IDE.
 
-. Modify the `test_automation_script.py` file to include the email id registered with Amazon.
+. Open the `test_automation_script.py` file and modify the following statement to include the email id registered with Amazon:
 +
 [source,python]
 ----
