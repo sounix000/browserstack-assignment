@@ -1,54 +1,52 @@
+# Import necessary packages
+import os, time
 from dotenv import load_dotenv
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.safari.options import Options as SafariOptions
-from selenium.webdriver.edge.options import Options as EdgeOptions
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
 from threading import Thread
-# This array 'capabilities' defines the capabilities browser, device and OS combinations where the test will run
+
+# Load the environment variables from the .env file
 load_dotenv()
-BUILD_NAME = "browserstack-build-1"
+
+# Name of the build that will run remotely on BrowserStack
+# Tests will be organized within this build
+BUILD_NAME = "browserstack-build-amazon-sign-in"
+
+# The 'capabilities' array defines various browser, device, and OS combinations for the test to run.
 capabilities = [
     {
         "browserName": "chrome",
         "browserVersion": "103.0",
         "os": "Windows",
         "osVersion": "11",
-        "sessionName": "Parallel Test 1",  # test name
-        "buildName": BUILD_NAME,  # Your tests will be organized within this build
+        "sessionName": "Parallel Test Chrome Windows",  # test name
+        "buildName": BUILD_NAME  
     },
     {
         "browserName": "firefox",
         "browserVersion": "102.0",
         "os": "Windows",
         "osVersion": "10",
-        "sessionName": "Parallel Test 2",
-        "buildName": BUILD_NAME,
-    },
-    {
-        "browserName": "safari",
-        "browserVersion": "14.1",
-        "os": "OS X",
-        "osVersion": "Big Sur",
-        "sessionName": "Parallel Test 3",
-        "buildName": BUILD_NAME,
+        "sessionName": "Parallel Test Firefox Windows",
+        "buildName": BUILD_NAME
     },
 ]
+
+# Change browsers
 def get_browser_option(browser):
     switcher = {
         "chrome": ChromeOptions(),
         "firefox": FirefoxOptions(),
-        "edge": EdgeOptions(),
-        "safari": SafariOptions(),
     }
     return switcher.get(browser, ChromeOptions())
-# run_session function searches for 'BrowserStack' on duckduckgo.com
-def run_session(cap):
+
+# The run_session() function handles the sign in to Amazon.
+# Depending on your location, modify the default value of 
+# the argument AMZ_URL.
+# This function also assumes that 2-factor authentication is disabled.
+def run_session(cap, AMZ_URL="https://amazon.in/"):
     cap["userName"] = os.environ.get("BROWSERSTACK_USERNAME")
     cap["accessKey"] = os.environ.get("BROWSERSTACK_ACCESS_KEY")
     options = get_browser_option(cap["browserName"].lower())
@@ -57,23 +55,31 @@ def run_session(cap):
     driver = webdriver.Remote(
         command_executor="https://hub.browserstack.com/wd/hub", options=options
     )
-    driver.get("https://www.duckduckgo.com")
-    if not "DuckDuckGo" in driver.title:
-        raise Exception("Unable to load duckduckgo page!")
-    elem = driver.find_element(By.NAME, "q")
-    elem.send_keys("BrowserStack")
-    elem.submit()
-    try:
-        WebDriverWait(driver, 5).until(EC.title_contains("BrowserStack"))
-        driver.execute_script(
-            'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed", "reason": "Title matched!"}}'
-        )
-    except TimeoutException:
-        driver.execute_script(
-            'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Title not matched"}}'
-        )
-    print(driver.title)
+    # Go to Amazon sign in page
+    driver.get(AMZ_URL)
+    sign_in_button = driver.find_element(By.ID, "nav-link-accountList")
+    sign_in_button.click()
+    time.sleep(2)
+    # Access the sign in credentials
+    AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+    AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
+    # Enter email and continue
+    username_textbox = driver.find_element(By.ID, "ap_email")
+    username_textbox.send_keys(AMAZON_EMAIL)
+    time.sleep(2)
+    continue_button = driver.find_element(By.ID, "continue")
+    continue_button.submit()
+    time.sleep(2)
+    # Enter password and submit
+    password_textbox = driver.find_element(By.ID, "ap_password")
+    password_textbox.send_keys(AMAZON_PASSWORD)
+    time.sleep(2)
+    sign_in_button = driver.find_element(By.ID, "auth-signin-button-announce")
+    sign_in_button.submit()
+    time.sleep(2)
+    print("Sign in test complete.")
     driver.quit()
-# The Thread function takes run_session function and each set of capability from the caps array as an argument to run each session parallelly
+
+# The Thread() function takes run_session function and each set of capability from the caps array as an argument to run each session in parallel.
 for cap in capabilities:
     Thread(target=run_session, args=(cap,)).start()

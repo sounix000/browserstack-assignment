@@ -23,11 +23,11 @@ Before creating the test automation script, ensure that your local machine has a
 +
 [source,terminal]
 ----
-$ python --version
-Python 3.10.5
-
 $ which python
 /usr/bin/python
+
+$ python --version
+Python 3.10.5
 
 $ pip --version
 pip 21.2.3 from /usr/lib/python3.10/site-packages/pip (python 3.10)
@@ -74,7 +74,7 @@ $ rm ~/bin/chromedriver
 .. Unzip the downloaded file and navigate to the resulting directory.
 .. Copy the `chromedriver` binary to any location supported by your `$PATH` variable.
 
-=== Creating test automation script using Selenium and Python
+=== Creating a local test script using Selenium and Python
 
 . Sign in to your GitHub account.
 
@@ -94,28 +94,25 @@ $ git clone git@github.com:<your_github_username>/browserstack-assignment.git
 $ cd browserstack-assignment/
 ----
 
-. Open the project directory using your favorite text editor or IDE.
-
-. Open the `test_automation_script.py` file and modify the following statement to include the email id registered with Amazon:
+. Create a `.env` file and save your Amazon sign in credentials in the file.
 +
-[source,python]
+.Example: .env file
+[source,terminal]
 ----
-# Email registered with Amazon
-EMAIL_ID = "<email_registered_with_Amazon>"
+AMAZON_EMAIL="<email_registered_with_amazon>"
+AMAZON_PASSWORD="<password_for_amazon_account>"
 ----
 
-. Create a file named `password.txt`, and save your Amazon password in it.
-
-. Run the file `test_automation_script.py`.
+. Run the file `local_script.py`.
 +
 [source,terminal]
 ----
-$ python test_automation_script.py
+$ python local_script.py
 ----  
 
-=== Understanding the test automation script
+=== Understanding the local test script
 
-The Python script `test_automation_script.py` programmatically does the following operations:
+The `local_script.py` Python script facilitates testing the Amazon **Sign in** page on your local machine, without involving BrowserStack. The script programmatically performs the following operations:
 
 . Import necessary Python packages.
 +
@@ -123,8 +120,10 @@ The Python script `test_automation_script.py` programmatically does the followin
 ====
 [,python]
 ----
+import os, time # The function time.sleep() helps mask the scripted bot behavior.
 from selenium.webdriver import Chrome
-import time # The function time.sleep() helps mask the scripted bot behavior.
+from selenium.webdriver.common.by import By
+from dotenv import load_dotenv
 ----
 ====
 
@@ -142,20 +141,30 @@ def slow_typing(element, text):
 ----
 ====
 
+. Define the Amazon website URL.
++
+[%collapsible]
+====
+[,python]
+----
+# URL for Amazon website
+# Change it depending on your location
+AMZ_URL = "https://amazon.in/"
+----
+====
+
 . Access the email id and password for the Amazon account used for test.
 +
 [%collapsible]
 ====
 [,python]
 ----
-# Email registered with Amazon
-EMAIL_ID = "<email_registered_with_Amazon>"
+# Load the environment variables from the .env file
+load_dotenv()
 
-# Read password from a text file and add the file to .gitignore
-# Do not hardcode the password for your Amazon account.
-password = ""
-with open('password.txt', 'r') as password_file:
-    password = password_file.read().replace('\n', '')
+# Read sign in credentials for Amazon from the .env file
+AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
 ----
 ====
 
@@ -167,9 +176,9 @@ with open('password.txt', 'r') as password_file:
 ----
 # Open browser and go to sign in page
 browser = Chrome()
-browser.get('https://amazon.in/')
+browser.get(AMZ_URL)
 time.sleep(2)
-sign_in_button = browser.find_element_by_xpath('//*[@id="nav-link-accountList"]/span')
+sign_in_button = browser.find_element(By.ID, "nav-link-accountList")
 sign_in_button.click()
 time.sleep(2)
 ----
@@ -183,21 +192,21 @@ time.sleep(2)
 ----
 # Assumption: There are no two-factor authentication enabled
 # Enter the sign in credentials
-username_textbox = browser.find_element_by_id("ap_email")
-slow_typing(username_textbox, EMAIL_ID)
+username_textbox = browser.find_element(By.ID, "ap_email")
+slow_typing(username_textbox, AMAZON_EMAIL)
 time.sleep(2)
 
-continue_button = browser.find_element_by_id("continue")
+continue_button = browser.find_element(By.ID, "continue")
 continue_button.submit()
 time.sleep(2)
 
-password_textbox = browser.find_element_by_id("ap_password")
-slow_typing(password_textbox, password)
+password_textbox = browser.find_element(By.ID, "ap_password")
+slow_typing(password_textbox, AMAZON_PASSWORD)
 time.sleep(2)
 
-sign_in_button = browser.find_element_by_id("auth-signin-button-announce")
+sign_in_button = browser.find_element(By.ID, "auth-signin-button-announce")
 sign_in_button.submit()
-time.sleep(20)
+time.sleep(5)
 
 browser.close()
 ----
@@ -209,8 +218,10 @@ For convenience, the entire script is given below:
 ====
 [,python]
 ----
+import os, time # The function time.sleep() helps mask the scripted bot behavior.
 from selenium.webdriver import Chrome
-import time # The function time.sleep() helps mask the scripted bot behavior.
+from selenium.webdriver.common.by import By
+from dotenv import load_dotenv
 
 # Helper function to mimic slow typing by a human
 def slow_typing(element, text):
@@ -218,50 +229,45 @@ def slow_typing(element, text):
         element.send_keys(character)
         time.sleep(0.3)
 
-# Email registered with Amazon
-EMAIL_ID = "<email_registered_with_Amazon>"
+# URL for Amazon website
+# Change it depending on your location
+AMZ_URL = "https://amazon.in/"
 
-# Read password from a text file and add the file to .gitignore
-# Do not hardcode the password for your Amazon account.
-password = ""
-with open('password.txt', 'r') as password_file:
-    password = password_file.read().replace('\n', '')
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Read sign in credentials for Amazon from the .env file
+AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
 
 # Open browser and go to sign in page
 browser = Chrome()
-browser.get('https://amazon.in/')
+browser.get(AMZ_URL)
 time.sleep(2)
-sign_in_button = browser.find_element_by_xpath('//*[@id="nav-link-accountList"]/span')
+sign_in_button = browser.find_element(By.ID, "nav-link-accountList")
 sign_in_button.click()
 time.sleep(2)
 
 # Assumption: There are no two-factor authentication enabled
 # Enter the sign in credentials
-username_textbox = browser.find_element_by_id("ap_email")
-slow_typing(username_textbox, EMAIL_ID)
+username_textbox = browser.find_element(By.ID, "ap_email")
+slow_typing(username_textbox, AMAZON_EMAIL)
 time.sleep(2)
 
-continue_button = browser.find_element_by_id("continue")
+continue_button = browser.find_element(By.ID, "continue")
 continue_button.submit()
 time.sleep(2)
 
-password_textbox = browser.find_element_by_id("ap_password")
-slow_typing(password_textbox, password)
+password_textbox = browser.find_element(By.ID, "ap_password")
+slow_typing(password_textbox, AMAZON_PASSWORD)
 time.sleep(2)
 
-sign_in_button = browser.find_element_by_id("auth-signin-button-announce")
+sign_in_button = browser.find_element(By.ID, "auth-signin-button-announce")
 sign_in_button.submit()
-time.sleep(20)
+time.sleep(5)
 
 browser.close()
 ----
-====
-
-[NOTE]
-====
-This script facilitates testing the Amazon **Sign in** page on your local machine, without involving BrowserStack or using the best practices for credential management. 
-
-In the next section of this tutorial, we will modify the script to leverage the capabilities of BrowserStack, as well as incorporate best practices for credential management. 
 ====
 
 == Integrating the script with BrowserStack
@@ -276,17 +282,129 @@ After successfully testing the automation script on your local machine, you can 
 
 . From the **ACCESS KEY** dropdown menu, note the values of the **User Name** and **Access Key** fields.
 
-. In the project directory of your local machine, create a `.env` file and save it with the following content:
+. In the `.env` file, add the BrowserStack secrets below the Amazon account credentials and save it.
 +
 [source,terminal]
 ----
 BROWSERSTACK_USERNAME="<your_browserstack_username>"
 BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
 ----
++
+The final content of the `.env` file is similar to the following:
++
+[source,terminal]
+----
+$ cat .env
+AMAZON_EMAIL="<email_registered_with_amazon>"
+AMAZON_PASSWORD="<password_for_amazon_account>"
+BROWSERSTACK_USERNAME="<your_browserstack_username>"
+BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
+----
 
 === Modifying the test script
 
+The entire modified script is given below:
+
+[%collapsible]
+====
+[,python]
+----
+# Import necessary packages
+import os, time
+from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.common.by import By
+from threading import Thread
+
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Name of the build that will run remotely on BrowserStack
+# Tests will be organized within this build
+BUILD_NAME = "browserstack-build-amazon-sign-in"
+
+# The 'capabilities' array defines various browser, device, and OS combinations for the test to run.
+capabilities = [
+    {
+        "browserName": "chrome",
+        "browserVersion": "103.0",
+        "os": "Windows",
+        "osVersion": "11",
+        "sessionName": "Parallel Test Chrome Windows",  # test name
+        "buildName": BUILD_NAME  
+    },
+    {
+        "browserName": "firefox",
+        "browserVersion": "102.0",
+        "os": "Windows",
+        "osVersion": "10",
+        "sessionName": "Parallel Test Firefox Windows",
+        "buildName": BUILD_NAME
+    },
+]
+
+# Change browsers
+def get_browser_option(browser):
+    switcher = {
+        "chrome": ChromeOptions(),
+        "firefox": FirefoxOptions(),
+    }
+    return switcher.get(browser, ChromeOptions())
+
+# The run_session() function handles the sign in to Amazon.
+# Depending on your location, modify the default value of 
+# the argument AMZ_URL.
+# This function also assumes that 2-factor authentication is disabled.
+def run_session(cap, AMZ_URL="https://amazon.in/"):
+    cap["userName"] = os.environ.get("BROWSERSTACK_USERNAME")
+    cap["accessKey"] = os.environ.get("BROWSERSTACK_ACCESS_KEY")
+    options = get_browser_option(cap["browserName"].lower())
+    options.set_capability("browserName", cap["browserName"].lower())
+    options.set_capability("bstack:options", cap)
+    driver = webdriver.Remote(
+        command_executor="https://hub.browserstack.com/wd/hub", options=options
+    )
+    # Go to Amazon sign in page
+    driver.get(AMZ_URL)
+    sign_in_button = driver.find_element(By.ID, "nav-link-accountList")
+    sign_in_button.click()
+    time.sleep(2)
+    # Access the sign in credentials
+    AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+    AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
+    # Enter email and continue
+    username_textbox = driver.find_element(By.ID, "ap_email")
+    username_textbox.send_keys(AMAZON_EMAIL)
+    time.sleep(2)
+    continue_button = driver.find_element(By.ID, "continue")
+    continue_button.submit()
+    time.sleep(2)
+    # Enter password and submit
+    password_textbox = driver.find_element(By.ID, "ap_password")
+    password_textbox.send_keys(AMAZON_PASSWORD)
+    time.sleep(2)
+    sign_in_button = driver.find_element(By.ID, "auth-signin-button-announce")
+    sign_in_button.submit()
+    time.sleep(2)
+    print("Sign in test complete.")
+    driver.quit()
+
+# The Thread() function takes run_session function and each set of capability from the caps array as an argument to run each session in parallel.
+for cap in capabilities:
+    Thread(target=run_session, args=(cap,)).start()
+----
+====
+
+
 === Observing the test results in BrowserStack dashboard
+
+. In your BrowserStack dashboard, select the build from the **All Builds** drop down list on the left navigation pane.
+
+. Check the status of the sessions for the selected build.
++
+image::./images/browserstack_builds.png[BrowserStack Dashboard]
 
 == Automatically running modified script using GitHub Actions
 Lorem Ipsum

@@ -452,8 +452,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_testing_on_local_machine">Testing on local machine</a>
 <ul class="sectlevel2">
 <li><a href="#_installing_dependencies_on_the_local_machine">Installing dependencies on the local machine</a></li>
-<li><a href="#_creating_test_automation_script_using_selenium_and_python">Creating test automation script using Selenium and Python</a></li>
-<li><a href="#_understanding_the_test_automation_script">Understanding the test automation script</a></li>
+<li><a href="#_creating_a_local_test_script_using_selenium_and_python">Creating a local test script using Selenium and Python</a></li>
+<li><a href="#_understanding_the_local_test_script">Understanding the local test script</a></li>
 </ul>
 </li>
 <li><a href="#_integrating_the_script_with_browserstack">Integrating the script with BrowserStack</a>
@@ -504,11 +504,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Check the <code>Python</code> and <code>pip</code> version available on you system.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ python --version
-Python 3.10.5
-
-$ which python
+<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ which python
 /usr/bin/python
+
+$ python --version
+Python 3.10.5
 
 $ pip --version
 pip 21.2.3 from /usr/lib/python3.10/site-packages/pip (python 3.10)</code></pre>
@@ -584,7 +584,7 @@ $ rm ~/bin/chromedriver</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating_test_automation_script_using_selenium_and_python">Creating test automation script using Selenium and Python</h3>
+<h3 id="_creating_a_local_test_script_using_selenium_and_python">Creating a local test script using Selenium and Python</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -610,25 +610,20 @@ $ rm ~/bin/chromedriver</code></pre>
 </div>
 </li>
 <li>
-<p>Open the project directory using your favorite text editor or IDE.</p>
-</li>
-<li>
-<p>Open the <code>test_automation_script.py</code> file and modify the following statement to include the email id registered with Amazon:</p>
+<p>Create a <code>.env</code> file and save your Amazon sign in credentials in the file.</p>
 <div class="listingblock">
+<div class="title">Example: .env file</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Email registered with Amazon
-EMAIL_ID = "&lt;email_registered_with_Amazon&gt;"</code></pre>
+<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">AMAZON_EMAIL="&lt;email_registered_with_amazon&gt;"
+AMAZON_PASSWORD="&lt;password_for_amazon_account&gt;"</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create a file named <code>password.txt</code>, and save your Amazon password in it.</p>
-</li>
-<li>
-<p>Run the file <code>test_automation_script.py</code>.</p>
+<p>Run the file <code>local_script.py</code>.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ python test_automation_script.py</code></pre>
+<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ python local_script.py</code></pre>
 </div>
 </div>
 </li>
@@ -636,9 +631,9 @@ EMAIL_ID = "&lt;email_registered_with_Amazon&gt;"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_understanding_the_test_automation_script">Understanding the test automation script</h3>
+<h3 id="_understanding_the_local_test_script">Understanding the local test script</h3>
 <div class="paragraph">
-<p>The Python script <code>test_automation_script.py</code> programmatically does the following operations:</p>
+<p>The <code>local_script.py</code> Python script facilitates testing the Amazon <strong>Sign in</strong> page on your local machine, without involving BrowserStack. The script programmatically performs the following operations:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -649,8 +644,10 @@ EMAIL_ID = "&lt;email_registered_with_Amazon&gt;"</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from selenium.webdriver import Chrome
-import time # The function time.sleep() helps mask the scripted bot behavior.</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import os, time # The function time.sleep() helps mask the scripted bot behavior.
+from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
+from dotenv import load_dotenv</code></pre>
 </div>
 </div>
 </div>
@@ -674,20 +671,33 @@ def slow_typing(element, text):
 </details>
 </li>
 <li>
+<p>Define the Amazon website URL.</p>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># URL for Amazon website
+# Change it depending on your location
+AMZ_URL = "https://amazon.in/"</code></pre>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li>
 <p>Access the email id and password for the Amazon account used for test.</p>
 <details>
 <summary class="title">Details</summary>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Email registered with Amazon
-EMAIL_ID = "&lt;email_registered_with_Amazon&gt;"
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Load the environment variables from the .env file
+load_dotenv()
 
-# Read password from a text file and add the file to .gitignore
-# Do not hardcode the password for your Amazon account.
-password = ""
-with open('password.txt', 'r') as password_file:
-    password = password_file.read().replace('\n', '')</code></pre>
+# Read sign in credentials for Amazon from the .env file
+AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")</code></pre>
 </div>
 </div>
 </div>
@@ -702,9 +712,9 @@ with open('password.txt', 'r') as password_file:
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Open browser and go to sign in page
 browser = Chrome()
-browser.get('https://amazon.in/')
+browser.get(AMZ_URL)
 time.sleep(2)
-sign_in_button = browser.find_element_by_xpath('//*[@id="nav-link-accountList"]/span')
+sign_in_button = browser.find_element(By.ID, "nav-link-accountList")
 sign_in_button.click()
 time.sleep(2)</code></pre>
 </div>
@@ -721,21 +731,21 @@ time.sleep(2)</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Assumption: There are no two-factor authentication enabled
 # Enter the sign in credentials
-username_textbox = browser.find_element_by_id("ap_email")
-slow_typing(username_textbox, EMAIL_ID)
+username_textbox = browser.find_element(By.ID, "ap_email")
+slow_typing(username_textbox, AMAZON_EMAIL)
 time.sleep(2)
 
-continue_button = browser.find_element_by_id("continue")
+continue_button = browser.find_element(By.ID, "continue")
 continue_button.submit()
 time.sleep(2)
 
-password_textbox = browser.find_element_by_id("ap_password")
-slow_typing(password_textbox, password)
+password_textbox = browser.find_element(By.ID, "ap_password")
+slow_typing(password_textbox, AMAZON_PASSWORD)
 time.sleep(2)
 
-sign_in_button = browser.find_element_by_id("auth-signin-button-announce")
+sign_in_button = browser.find_element(By.ID, "auth-signin-button-announce")
 sign_in_button.submit()
-time.sleep(20)
+time.sleep(5)
 
 browser.close()</code></pre>
 </div>
@@ -753,8 +763,10 @@ browser.close()</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from selenium.webdriver import Chrome
-import time # The function time.sleep() helps mask the scripted bot behavior.
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import os, time # The function time.sleep() helps mask the scripted bot behavior.
+from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
+from dotenv import load_dotenv
 
 # Helper function to mimic slow typing by a human
 def slow_typing(element, text):
@@ -762,63 +774,48 @@ def slow_typing(element, text):
         element.send_keys(character)
         time.sleep(0.3)
 
-# Email registered with Amazon
-EMAIL_ID = "&lt;email_registered_with_Amazon&gt;"
+# URL for Amazon website
+# Change it depending on your location
+AMZ_URL = "https://amazon.in/"
 
-# Read password from a text file and add the file to .gitignore
-# Do not hardcode the password for your Amazon account.
-password = ""
-with open('password.txt', 'r') as password_file:
-    password = password_file.read().replace('\n', '')
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Read sign in credentials for Amazon from the .env file
+AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
 
 # Open browser and go to sign in page
 browser = Chrome()
-browser.get('https://amazon.in/')
+browser.get(AMZ_URL)
 time.sleep(2)
-sign_in_button = browser.find_element_by_xpath('//*[@id="nav-link-accountList"]/span')
+sign_in_button = browser.find_element(By.ID, "nav-link-accountList")
 sign_in_button.click()
 time.sleep(2)
 
 # Assumption: There are no two-factor authentication enabled
 # Enter the sign in credentials
-username_textbox = browser.find_element_by_id("ap_email")
-slow_typing(username_textbox, EMAIL_ID)
+username_textbox = browser.find_element(By.ID, "ap_email")
+slow_typing(username_textbox, AMAZON_EMAIL)
 time.sleep(2)
 
-continue_button = browser.find_element_by_id("continue")
+continue_button = browser.find_element(By.ID, "continue")
 continue_button.submit()
 time.sleep(2)
 
-password_textbox = browser.find_element_by_id("ap_password")
-slow_typing(password_textbox, password)
+password_textbox = browser.find_element(By.ID, "ap_password")
+slow_typing(password_textbox, AMAZON_PASSWORD)
 time.sleep(2)
 
-sign_in_button = browser.find_element_by_id("auth-signin-button-announce")
+sign_in_button = browser.find_element(By.ID, "auth-signin-button-announce")
 sign_in_button.submit()
-time.sleep(20)
+time.sleep(5)
 
 browser.close()</code></pre>
 </div>
 </div>
 </div>
 </details>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This script facilitates testing the Amazon <strong>Sign in</strong> page on your local machine, without involving BrowserStack or using the best practices for credential management.</p>
-</div>
-<div class="paragraph">
-<p>In the next section of this tutorial, we will modify the script to leverage the capabilities of BrowserStack, as well as incorporate best practices for credential management.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -842,10 +839,22 @@ browser.close()</code></pre>
 <p>From the <strong>ACCESS KEY</strong> dropdown menu, note the values of the <strong>User Name</strong> and <strong>Access Key</strong> fields.</p>
 </li>
 <li>
-<p>In the project directory of your local machine, create a <code>.env</code> file and save it with the following content:</p>
+<p>In the <code>.env</code> file, add the BrowserStack secrets below the Amazon account credentials and save it.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">BROWSERSTACK_USERNAME="&lt;your_browserstack_username&gt;"
+BROWSERSTACK_ACCESS_KEY="&lt;your_browserstack_access_key&gt;"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final content of the <code>.env</code> file is similar to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">$ cat .env
+AMAZON_EMAIL="&lt;email_registered_with_amazon&gt;"
+AMAZON_PASSWORD="&lt;password_for_amazon_account&gt;"
+BROWSERSTACK_USERNAME="&lt;your_browserstack_username&gt;"
 BROWSERSTACK_ACCESS_KEY="&lt;your_browserstack_access_key&gt;"</code></pre>
 </div>
 </div>
@@ -855,11 +864,121 @@ BROWSERSTACK_ACCESS_KEY="&lt;your_browserstack_access_key&gt;"</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_modifying_the_test_script">Modifying the test script</h3>
+<div class="paragraph">
+<p>The entire modified script is given below:</p>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Import necessary packages
+import os, time
+from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.common.by import By
+from threading import Thread
 
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Name of the build that will run remotely on BrowserStack
+# Tests will be organized within this build
+BUILD_NAME = "browserstack-build-amazon-sign-in"
+
+# The 'capabilities' array defines various browser, device, and OS combinations for the test to run.
+capabilities = [
+    {
+        "browserName": "chrome",
+        "browserVersion": "103.0",
+        "os": "Windows",
+        "osVersion": "11",
+        "sessionName": "Parallel Test Chrome Windows",  # test name
+        "buildName": BUILD_NAME
+    },
+    {
+        "browserName": "firefox",
+        "browserVersion": "102.0",
+        "os": "Windows",
+        "osVersion": "10",
+        "sessionName": "Parallel Test Firefox Windows",
+        "buildName": BUILD_NAME
+    },
+]
+
+# Change browsers
+def get_browser_option(browser):
+    switcher = {
+        "chrome": ChromeOptions(),
+        "firefox": FirefoxOptions(),
+    }
+    return switcher.get(browser, ChromeOptions())
+
+# The run_session() function handles the sign in to Amazon.
+# Depending on your location, modify the default value of
+# the argument AMZ_URL.
+# This function also assumes that 2-factor authentication is disabled.
+def run_session(cap, AMZ_URL="https://amazon.in/"):
+    cap["userName"] = os.environ.get("BROWSERSTACK_USERNAME")
+    cap["accessKey"] = os.environ.get("BROWSERSTACK_ACCESS_KEY")
+    options = get_browser_option(cap["browserName"].lower())
+    options.set_capability("browserName", cap["browserName"].lower())
+    options.set_capability("bstack:options", cap)
+    driver = webdriver.Remote(
+        command_executor="https://hub.browserstack.com/wd/hub", options=options
+    )
+    # Go to Amazon sign in page
+    driver.get(AMZ_URL)
+    sign_in_button = driver.find_element(By.ID, "nav-link-accountList")
+    sign_in_button.click()
+    time.sleep(2)
+    # Access the sign in credentials
+    AMAZON_EMAIL = os.environ.get("AMAZON_EMAIL")
+    AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
+    # Enter email and continue
+    username_textbox = driver.find_element(By.ID, "ap_email")
+    username_textbox.send_keys(AMAZON_EMAIL)
+    time.sleep(2)
+    continue_button = driver.find_element(By.ID, "continue")
+    continue_button.submit()
+    time.sleep(2)
+    # Enter password and submit
+    password_textbox = driver.find_element(By.ID, "ap_password")
+    password_textbox.send_keys(AMAZON_PASSWORD)
+    time.sleep(2)
+    sign_in_button = driver.find_element(By.ID, "auth-signin-button-announce")
+    sign_in_button.submit()
+    time.sleep(2)
+    print("Sign in test complete.")
+    driver.quit()
+
+# The Thread() function takes run_session function and each set of capability from the caps array as an argument to run each session in parallel.
+for cap in capabilities:
+    Thread(target=run_session, args=(cap,)).start()</code></pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 <div class="sect2">
 <h3 id="_observing_the_test_results_in_browserstack_dashboard">Observing the test results in BrowserStack dashboard</h3>
-
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In your BrowserStack dashboard, select the build from the <strong>All Builds</strong> drop down list on the left navigation pane.</p>
+</li>
+<li>
+<p>Check the status of the sessions for the selected build.</p>
+<div class="imageblock">
+<div class="content">
+<img src="./images/browserstack_builds.png" alt="BrowserStack Dashboard">
+</div>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>

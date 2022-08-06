@@ -1,6 +1,7 @@
 # Specific to this repository
 password.txt
 .env
+browserstack/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
