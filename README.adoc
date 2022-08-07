@@ -8,12 +8,28 @@ Using Selenium (Python), BrowserStack, and GitHub Actions
 == Overview
 Lorem Ipsum
 
+
+
+== Prerequisites
+
+Before starting with test automation scripts, ensure the following:
+
+* Git is installed in your local machine. You can download from it from the link:https://git-scm.com/downloads[git-scm website^].
+
+* You are familiar with link:https://www.python.org/[Python^] and link:https://www.selenium.dev/[Selenium^] for automated tests.
+
+* You have an active GitHub account. If not, link:https://github.com/signup[sign up^] for an account.
+
+* You have a basic idea about CI/CD pipelines.
+
+== Testing on a local machine
+
+Before running a script on BrowserStack's grid, you should create and test it on your local machine.
+
 [NOTE]
 ====
 All command examples and code snippets included in this tutorial have been tested on a local machine running the `Fedora 35` operating system. Whenever necessary, modify the commands and code snippets according to your machine's operating system and package manager.
 ====
-
-== Testing on local machine
 
 === Installing dependencies on the local machine
 
@@ -21,10 +37,11 @@ Before creating the test automation script, ensure that your local machine has a
 
 . Sign in to your GitHub account.
 
-. Fork the repository link:https://github.com/sounix000/browserstack-assignment[https://github.com/sounix000/browserstack-assignment].
+. Fork the repository link:https://github.com/sounix000/browserstack-assignment[browserstack-assignment^] on GitHub.
 
 . Clone the forked repository in your local machine. 
 +
+.Example: Cloning using SSH protocol
 [source,terminal]
 ----
 $ git clone git@github.com:<your_github_username>/browserstack-assignment.git
@@ -98,7 +115,7 @@ $ rm ~/bin/chromedriver
 ----
 
 . Install the `chromedriver` package that matches the Google Chrome version. 
-.. Download the correct version for your system from the link:https://chromedriver.chromium.org/downloads[Chromium website].
+.. Download the correct version for your system from the link:https://chromedriver.chromium.org/downloads[Chromium website^].
 .. Unzip the downloaded file and navigate to the resulting directory.
 .. Copy the `chromedriver` binary to any location supported by your `$PATH` variable.
 
@@ -288,14 +305,13 @@ browser.close()
 ====
 
 == Integrating the script with BrowserStack
+After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack.
 
 === Getting BrowserStack secrets
 
-After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack by performing the following steps:
+. link:https://www.browserstack.com/users/sign_up[Sign up^] for a trial account of BrowserStack.
 
-. link:https://www.browserstack.com/users/sign_up[Sign up] for a trial account of BrowserStack.
-
-. Navigate to your BrowserStack link:https://automate.browserstack.com/dashboard/v2/quick-start/get-started[dashboard].
+. Navigate to your BrowserStack link:https://automate.browserstack.com/dashboard/v2/quick-start/get-started[dashboard^].
 
 . From the **ACCESS KEY** dropdown menu, note the values of the **User Name** and **Access Key** fields.
 
@@ -312,6 +328,7 @@ The final content of the `.env` file is similar to the following:
 [source,terminal]
 ----
 $ cat .env
+
 AMAZON_EMAIL="<email_registered_with_amazon>"
 AMAZON_PASSWORD="<password_for_amazon_account>"
 BROWSERSTACK_USERNAME="<your_browserstack_username>"
@@ -319,10 +336,11 @@ BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
 ----
 
 === Modifying the test script
+You must modify the script to use BrowserStack's capabilities of running parallel tests on numerous device and browser combinations.
 
-The entire modified script is given below:
+The entire modified script named `browserstack_script.py` is given below:
 
-.Code
+.browserstack_script.py
 [%collapsible]
 ====
 [,python]
@@ -424,7 +442,7 @@ for cap in capabilities:
 +
 image::./images/browserstack_builds.png[BrowserStack Dashboard]
 
-== Automatically running modified script using GitHub Actions
+== Automatically running the modified script using GitHub Actions
 
 . In your forked repository on GitHub, navigate to **Settings** -> **Secrets** (left navigation pane) -> **Actions** -> **New repository secret**.
 
@@ -492,9 +510,15 @@ One of the common reasons of failure for this job is the the following error: `M
 
 image::images/dotenv_error.png[]
 
-The failure happens due to this bug: link:https://github.com/theskumar/python-dotenv/issues/273[issue#273].
+The failure happens due to this bug: link:https://github.com/theskumar/python-dotenv/issues/273[issue#273^].
 The bug is hard to reproduce, and currently has no known solutions that are universally applicable.
 ====
 
-. In your BrowserStack dashboard, select the GitHub Actions build from the **All Builds** drop down list on the left navigation pane and observe the test status.
+. In your BrowserStack dashboard, select the GitHub Actions build from the **All Builds** drop down list on the left navigation pane, and observe the test status.
 
+== Additional resources
+* link:https://www.browserstack.com/guide/automate-with-selenium-python[Start Selenium Testing with Python: Automated Testing of a User Signup Form^]
+* link:https://selenium-python.readthedocs.io/[Selenium with Python^]
+* link:https://automate.browserstack.com/dashboard/v2/quick-start/get-started#introduction[Browserstack: Quick Integration Guide^]
+* link:https://docs.github.com/en/enterprise-cloud@latest/actions[GitHub Actions^]
+* link:https://www.browserstack.com/docs/automate/selenium/github-actions#set-up-github-secrets-in-your-repository[Integrate GitHub Actions with BrowserStack^]
