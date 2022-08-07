@@ -8,8 +8,7 @@
 # Check out the list of preinstalled packages for Ubuntu 22.04: https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2204-Readme.md
 
 # Set up and activate a Python virtual environment in the project directory.
-# Assumption: You have already checked out the project repository from GitHub.
-cd browserstack-assignment/
+# Assumption: Current directory is the project directory.
 python3 -m venv browserstack
 source browserstack/bin/activate
 
