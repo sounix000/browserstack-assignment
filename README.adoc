@@ -7,12 +7,39 @@ Using Selenium (Python), BrowserStack, and GitHub Actions
 
 == Overview
 
-WORK IN PROGRESS
+Automated testing of modern websites and mobile applications poses the following primary challenges:
 
+* The tests must run on numerous combinations of devices and browsers in parallel to speed up the process
+* The tests must be triggered for each new build of the application, or for each new code submission by developers
+* Logging and observability of test runs must be transparent, and the test results accessible from a single platform
 
-== Prerequisites
+link:https://www.browserstack.com/[BrowserStack^] solves these problems by offering the following:
 
-Before starting with test automation scripts, ensure the following:
+* A large collection of devices and browser versions on which you can run your tests
+* Support for almost all common programming languages and testing frameworks
+* Easy integration of large test suites with the BrowserStack platform
+* Comprehensive and detailed reports and logs for each test session in a single dashboard
+* Support for automated testing pipelines for all common CI/CD technologies 
+* Intuitive management of users, permissions, and large scale testing infrastructure
+* Fantastic documentation and support for everything you can do with BrowserStack
+* Transparent and reasonable link:https://www.browserstack.com/accounts/subscriptions[pricing^] for individual users, small teams, and enterprises
+
+=== Objectives
+
+The goal of this tutorial is to make you familiar with BrowserStack's capabilities, so that you can easily adopt BrowserStack for testing websites and mobile applications. In particular, you will learn about the following:
+
+* Creating and running a test automation script using Python and Selenium on your local machine
+* Adapting the script to use BrowserStack's capabilities, and running tests remotely on BrowserStack
+* Automating the running of tests using GitHub Actions for each modified version of the script
+
+[NOTE]
+====
+The code samples used in this tutorial are only for demonstration; **do not** use them in production scenarios.
+====
+
+=== Prerequisites
+
+Before starting with test automation, ensure the following:
 
 * Git is installed in your local machine. You can download from it from the link:https://git-scm.com/downloads[git-scm website^].
 
@@ -22,11 +49,11 @@ Before starting with test automation scripts, ensure the following:
 
 * You have a basic idea about CI/CD pipelines.
 
-The ideal audience for this tutorial are professionals with experience in automated testing of websites and mobile applications.
+The ideal audience for this tutorial are professionals with interest or experience in automated testing of websites and mobile applications.
 
 == Testing on a local machine
 
-Before running a script on BrowserStack's grid, you should create and test it on your local machine.
+Before running a script on BrowserStack's grid, create and test the simpler version of the script on your local machine.
 
 [NOTE]
 ====
@@ -35,7 +62,9 @@ All command examples and code snippets included in this tutorial have been teste
 
 === Installing dependencies on the local machine
 
-Before creating the test automation script, ensure that your local machine has all necessary dependencies.
+Before creating a test script, ensure that your local machine has all necessary dependencies.
+
+.Procedure
 
 . Sign in to your GitHub account.
 
@@ -65,7 +94,7 @@ $ bash set_up.sh
 +
 For easy reference, the shell script is given below:
 +
-.Code
+.set_up.sh
 [%collapsible]
 ====
 [,bash]
@@ -123,6 +152,8 @@ $ rm ~/bin/chromedriver
 
 === Locally running a test script 
 
+.Procedure
+
 . Create a `.env` file and save your Amazon sign in credentials in the file.
 +
 .Example: .env file
@@ -131,6 +162,11 @@ $ rm ~/bin/chromedriver
 AMAZON_EMAIL="<email_registered_with_amazon>"
 AMAZON_PASSWORD="<password_for_amazon_account>"
 ----
++
+[NOTE]
+====
+You can safely use the `.env` file for storing Amazon sign in credentials, while experimenting and developing the scripts. The `.gitignore` file has an entry for the `.env` file to prevent any accidental check ins and wider availability of the secrets.
+====
 
 . Run the file `local_script.py`.
 +
@@ -141,7 +177,7 @@ $ python local_script.py
 
 === Understanding the local test script
 
-The `local_script.py` Python script facilitates testing the Amazon **Sign in** page on your local machine, without involving BrowserStack. The script programmatically performs the following operations:
+The `local_script.py` Python script facilitates testing the Amazon **Sign in** page on your local machine, without involving BrowserStack. The script sequentially performs the following operations:
 
 . Import necessary Python packages.
 +
@@ -308,9 +344,11 @@ browser.close()
 
 == Integrating the script with BrowserStack
 
-After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack.
+After successfully testing the script on your local machine, modify and integrate the script with BrowserStack.
 
 === Getting BrowserStack secrets
+
+.Procedure
 
 . link:https://www.browserstack.com/users/sign_up[Sign up^] for a trial account of BrowserStack.
 
@@ -340,7 +378,7 @@ BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
 
 === Modifying the test script
 
-You must modify the script to use BrowserStack's capabilities of running parallel tests on numerous device and browser combinations.
+Modify the script to use BrowserStack's capabilities of running parallel tests on numerous device and browser combinations.
 
 The entire modified script named `browserstack_script.py` is given below:
 
@@ -437,8 +475,11 @@ for cap in capabilities:
 ----
 ====
 
+=== Observing test results in BrowserStack dashboard
 
-=== Observing the test results in BrowserStack dashboard
+You can monitor tests, inspect logs, and access other details of test sessions using the BrowserStack dashboard.
+
+.Procedure
 
 . In your BrowserStack dashboard, select the build from the **All Builds** drop down list on the left navigation pane.
 
@@ -447,6 +488,8 @@ for cap in capabilities:
 image::./images/browserstack_builds.png[BrowserStack Dashboard]
 
 == Automatically running the modified script using GitHub Actions
+
+You can     
 
 . In your forked repository on GitHub, navigate to **Settings** -> **Secrets** (left navigation pane) -> **Actions** -> **New repository secret**.
 

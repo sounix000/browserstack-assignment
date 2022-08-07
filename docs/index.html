@@ -448,8 +448,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_overview">Overview</a></li>
+<li><a href="#_overview">Overview</a>
+<ul class="sectlevel2">
+<li><a href="#_objectives">Objectives</a></li>
 <li><a href="#_prerequisites">Prerequisites</a></li>
+</ul>
+</li>
 <li><a href="#_testing_on_a_local_machine">Testing on a local machine</a>
 <ul class="sectlevel2">
 <li><a href="#_installing_dependencies_on_the_local_machine">Installing dependencies on the local machine</a></li>
@@ -461,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_getting_browserstack_secrets">Getting BrowserStack secrets</a></li>
 <li><a href="#_modifying_the_test_script">Modifying the test script</a></li>
-<li><a href="#_observing_the_test_results_in_browserstack_dashboard">Observing the test results in BrowserStack dashboard</a></li>
+<li><a href="#_observing_test_results_in_browserstack_dashboard">Observing test results in BrowserStack dashboard</a></li>
 </ul>
 </li>
 <li><a href="#_automatically_running_the_modified_script_using_github_actions">Automatically running the modified script using GitHub Actions</a></li>
@@ -474,15 +478,89 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>WORK IN PROGRESS</p>
+<p>Automated testing of modern websites and mobile applications poses the following primary challenges:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>The tests must run on numerous combinations of devices and browsers in parallel to speed up the process</p>
+</li>
+<li>
+<p>The tests must be triggered for each new build of the application, or for each new code submission by developers</p>
+</li>
+<li>
+<p>Logging and observability of test runs must be transparent, and the test results accessible from a single platform</p>
+</li>
+</ul>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_prerequisites">Prerequisites</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Before starting with test automation scripts, ensure the following:</p>
+<p><a href="https://www.browserstack.com/" target="_blank" rel="noopener">BrowserStack</a> solves these problems by offering the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A large collection of devices and browser versions on which you can run your tests</p>
+</li>
+<li>
+<p>Support for almost all common programming languages and testing frameworks</p>
+</li>
+<li>
+<p>Easy integration of large test suites with the BrowserStack platform</p>
+</li>
+<li>
+<p>Comprehensive and detailed reports and logs for each test session in a single dashboard</p>
+</li>
+<li>
+<p>Support for automated testing pipelines for all common CI/CD technologies</p>
+</li>
+<li>
+<p>Intuitive management of users, permissions, and large scale testing infrastructure</p>
+</li>
+<li>
+<p>Fantastic documentation and support for everything you can do with BrowserStack</p>
+</li>
+<li>
+<p>Transparent and reasonable <a href="https://www.browserstack.com/accounts/subscriptions" target="_blank" rel="noopener">pricing</a> for individual users, small teams, and enterprises</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_objectives">Objectives</h3>
+<div class="paragraph">
+<p>The goal of this tutorial is to make you familiar with BrowserStack&#8217;s capabilities, so that you can easily adopt BrowserStack for testing websites and mobile applications. In particular, you will learn about the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating and running a test automation script using Python and Selenium on your local machine</p>
+</li>
+<li>
+<p>Adapting the script to use BrowserStack&#8217;s capabilities, and running tests remotely on BrowserStack</p>
+</li>
+<li>
+<p>Automating the running of tests using GitHub Actions for each modified version of the script</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The code samples used in this tutorial are only for demonstration; <strong>do not</strong> use them in production scenarios.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites">Prerequisites</h3>
+<div class="paragraph">
+<p>Before starting with test automation, ensure the following:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -501,7 +579,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 <div class="paragraph">
-<p>The ideal audience for this tutorial are professionals with experience in automated testing of websites and mobile applications.</p>
+<p>The ideal audience for this tutorial are professionals with interest or experience in automated testing of websites and mobile applications.</p>
+</div>
 </div>
 </div>
 </div>
@@ -509,7 +588,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_testing_on_a_local_machine">Testing on a local machine</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Before running a script on BrowserStack&#8217;s grid, you should create and test it on your local machine.</p>
+<p>Before running a script on BrowserStack&#8217;s grid, create and test the simpler version of the script on your local machine.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -528,9 +607,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_installing_dependencies_on_the_local_machine">Installing dependencies on the local machine</h3>
 <div class="paragraph">
-<p>Before creating the test automation script, ensure that your local machine has all necessary dependencies.</p>
+<p>Before creating a test script, ensure that your local machine has all necessary dependencies.</p>
 </div>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Sign in to your GitHub account.</p>
@@ -566,7 +646,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>For easy reference, the shell script is given below:</p>
 </div>
 <details>
-<summary class="title">Code</summary>
+<summary class="title">set_up.sh</summary>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -643,6 +723,7 @@ $ rm ~/bin/chromedriver</code></pre>
 <div class="sect2">
 <h3 id="_locally_running_a_test_script">Locally running a test script</h3>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Create a <code>.env</code> file and save your Amazon sign in credentials in the file.</p>
@@ -652,6 +733,20 @@ $ rm ~/bin/chromedriver</code></pre>
 <pre class="highlightjs highlight"><code class="language-terminal hljs" data-lang="terminal">AMAZON_EMAIL="&lt;email_registered_with_amazon&gt;"
 AMAZON_PASSWORD="&lt;password_for_amazon_account&gt;"</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can safely use the <code>.env</code> file for storing Amazon sign in credentials, while experimenting and developing the scripts. The <code>.gitignore</code> file has an entry for the <code>.env</code> file to prevent any accidental check ins and wider availability of the secrets.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -668,7 +763,7 @@ AMAZON_PASSWORD="&lt;password_for_amazon_account&gt;"</code></pre>
 <div class="sect2">
 <h3 id="_understanding_the_local_test_script">Understanding the local test script</h3>
 <div class="paragraph">
-<p>The <code>local_script.py</code> Python script facilitates testing the Amazon <strong>Sign in</strong> page on your local machine, without involving BrowserStack. The script programmatically performs the following operations:</p>
+<p>The <code>local_script.py</code> Python script facilitates testing the Amazon <strong>Sign in</strong> page on your local machine, without involving BrowserStack. The script sequentially performs the following operations:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -858,11 +953,12 @@ browser.close()</code></pre>
 <h2 id="_integrating_the_script_with_browserstack">Integrating the script with BrowserStack</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack.</p>
+<p>After successfully testing the script on your local machine, modify and integrate the script with BrowserStack.</p>
 </div>
 <div class="sect2">
 <h3 id="_getting_browserstack_secrets">Getting BrowserStack secrets</h3>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p><a href="https://www.browserstack.com/users/sign_up" target="_blank" rel="noopener">Sign up</a> for a trial account of BrowserStack.</p>
@@ -901,7 +997,7 @@ BROWSERSTACK_ACCESS_KEY="&lt;your_browserstack_access_key&gt;"</code></pre>
 <div class="sect2">
 <h3 id="_modifying_the_test_script">Modifying the test script</h3>
 <div class="paragraph">
-<p>You must modify the script to use BrowserStack&#8217;s capabilities of running parallel tests on numerous device and browser combinations.</p>
+<p>Modify the script to use BrowserStack&#8217;s capabilities of running parallel tests on numerous device and browser combinations.</p>
 </div>
 <div class="paragraph">
 <p>The entire modified script named <code>browserstack_script.py</code> is given below:</p>
@@ -1002,8 +1098,12 @@ for cap in capabilities:
 </details>
 </div>
 <div class="sect2">
-<h3 id="_observing_the_test_results_in_browserstack_dashboard">Observing the test results in BrowserStack dashboard</h3>
+<h3 id="_observing_test_results_in_browserstack_dashboard">Observing test results in BrowserStack dashboard</h3>
+<div class="paragraph">
+<p>You can monitor tests, inspect logs, and access other details of test sessions using the BrowserStack dashboard.</p>
+</div>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>In your BrowserStack dashboard, select the build from the <strong>All Builds</strong> drop down list on the left navigation pane.</p>
@@ -1024,6 +1124,9 @@ for cap in capabilities:
 <div class="sect1">
 <h2 id="_automatically_running_the_modified_script_using_github_actions">Automatically running the modified script using GitHub Actions</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>You can</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
