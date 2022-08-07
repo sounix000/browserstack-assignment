@@ -34,7 +34,7 @@ The goal of this tutorial is to make you familiar with BrowserStack's capabiliti
 
 [NOTE]
 ====
-The code samples used in this tutorial are only for demonstration; **do not** use them in production scenarios.
+The code samples used in this tutorial are for demonstration only; **do not** use them in production scenarios.
 ====
 
 === Prerequisites
@@ -501,7 +501,7 @@ Using GitHub Actions, set up a CI pipeline such that each push or pull request t
 
 . In the project directory, inspect the `.github/workflows/browserstack_actions.yml` file that defines the GitHub Actions workflow.
 +
-.Code
+.browserstack_actions.yml
 [%collapsible]
 ====
 [,yml]
