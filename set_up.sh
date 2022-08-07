@@ -16,7 +16,7 @@ source browserstack/bin/activate
 python3 -m pip install selenium==4.1.0
 
 # Install python-dotenv package for handling environment variables from the test script
-sudo apt-get install python-dotenv
+python3 -m pip install python3-dotenv
 
 # Note: Because the selenium webdrivers invoke headless Chrome and Firefox in the remote BrowserStack Cloud, 
 # the Ubuntu runner need not have the specific versions of Chrome and Firefox drivers as mentioned in `browserstack_script.py`.
