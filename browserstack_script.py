@@ -1,6 +1,6 @@
 # Import necessary packages
 import os, time
-from browserstack/bin/dotenv import load_dotenv
+from bin import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
