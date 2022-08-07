@@ -1,0 +1,4 @@
+= Analysis of BrowserStack documentation
+Exploring a few areas of improvement
+
+== Lorem Ipsum

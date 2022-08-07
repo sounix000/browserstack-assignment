@@ -19,34 +19,62 @@ All command examples and code snippets included in this tutorial have been teste
 
 Before creating the test automation script, ensure that your local machine has all necessary dependencies.
 
-. Check the `Python` and `pip` version available on you system.
+. Sign in to your GitHub account.
+
+. Fork the repository link:https://github.com/sounix000/browserstack-assignment[https://github.com/sounix000/browserstack-assignment].
+
+. Clone the forked repository in your local machine. 
 +
 [source,terminal]
 ----
-$ which python
-/usr/bin/python
-
-$ python --version
-Python 3.10.5
-
-$ pip --version
-pip 21.2.3 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+$ git clone git@github.com:<your_github_username>/browserstack-assignment.git
 ----
 
-. If unavailable, install the necessary packages on your local machine.
+. Navigate to the project directory.
 +
 [source,terminal]
 ----
-$ sudo dnf install pip
+$ cd browserstack-assignment/
+----
 
-$ pip install selenium==4.1.0
-
-$ pip install python-dotenv
+. Run the `set_up.sh` script file to create a virtual environment and install dependencies.
++
+[source,terminal]
+----
+$ bash set_up.sh
 ----
 +
-[TIP]
+For easy reference, the shell script is given below:
++
+.Code
+[%collapsible]
 ====
-If any `selenium` package installed globally has a different version, you can create a link:https://docs.python.org/3/library/venv.html[Python virtual environment] for the project and install `selenium==4.1.0` within that virtual environment. Using such best practices isolates project dependencies and avoids conflicting versions. 
+[,bash]
+----
+# This script does the following:
+# - sets up a Python virtual environment in the Ubuntu runner for GitHub Actions
+# - installs all prerequisites for running the `browserstack_script.py` file in the Ubuntu runner for GitHub Actions 
+# the file `browserstack_script.py` on a Ubuntu runner.  
+#
+# You can also run this script to set up your environment and dependencies.
+#
+# Check out the list of preinstalled packages for Ubuntu 22.04: https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2204-Readme.md
+
+# Set up and activate a Python virtual environment.
+# Assumption: You have already checked out the project repository from GitHub.
+cd browserstack-assignment/
+python -m venv browserstack
+source browserstack/bin/activate
+
+# Install selenium v 4.1.0
+python -m pip install selenium==4.1.0
+
+# Install python-dotenv package for handling environment variables from the test script
+python -m pip install python-dotenv
+
+# Note: Because the selenium webdrivers invoke headless Chrome and Firefox in the remote BrowserStack Cloud, 
+# the Ubuntu runner need not have the specific versions of Chrome and Firefox drivers as mentioned in `browserstack_script.py`.
+----
 ====
 
 . Check the version of Google Chrome on your machine by running `chrome://version/` on the browser's search bar. Note the version, such as `Google Chrome:	104.0.5112.79 (Official Build) (64-bit)`. 
@@ -74,25 +102,7 @@ $ rm ~/bin/chromedriver
 .. Unzip the downloaded file and navigate to the resulting directory.
 .. Copy the `chromedriver` binary to any location supported by your `$PATH` variable.
 
-=== Creating a local test script using Selenium and Python
-
-. Sign in to your GitHub account.
-
-. Fork the repository link:https://github.com/sounix000/browserstack-assignment[https://github.com/sounix000/browserstack-assignment].
-
-. Clone the forked repository in your local machine. 
-+
-[source,terminal]
-----
-$ git clone git@github.com:<your_github_username>/browserstack-assignment.git
-----
-
-. Navigate to the project directory.
-+
-[source,terminal]
-----
-$ cd browserstack-assignment/
-----
+=== Locally running a test script 
 
 . Create a `.env` file and save your Amazon sign in credentials in the file.
 +
@@ -415,4 +425,66 @@ for cap in capabilities:
 image::./images/browserstack_builds.png[BrowserStack Dashboard]
 
 == Automatically running modified script using GitHub Actions
-Lorem Ipsum
+
+. In your forked repository on GitHub, navigate to **Settings** -> **Secrets** (left navigation pane) -> **Actions** -> **New repository secret**.
+
+. Add your BrowserStack secrets that are available in the `.env` file of your project directory.
+.. Enter **Name**: `BROWSERSTACK_USERNAME`, **Value**: `<your_browserstack_username>`, and click **Add secret**.
+.. Enter **Name**: `BROWSERSTACK_ACCESS_KEY`, **Value**: `<your_browserstack_access_key>`, and click **Add secret**.
+
+. In the project directory, inspect the `.github/workflows/browserstack_actions.yml` file that defines the GitHub Actions workflow.
++
+.Code
+[%collapsible]
+====
+[,yml]
+----
+name: 'BrowserStack GH Actions Test'
+on: [push, pull_request]
+jobs:
+  ubuntu-job:
+    name: 'BrowserStack Test on Ubuntu'
+    runs-on: ubuntu-latest  # Can be self-hosted runner also
+    steps:
+
+      - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: 'BrowserStack Local Tunnel Setup'  # Invokes the setup-local action
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+
+      - name: 'Checkout the repository' # Uses an action from GitHub marketplace to check out the repository
+        uses: actions/checkout@v2
+
+      - name: 'Setting up the runner' # Sets up a Python virtual environment and installs prerequisites
+        run: bash set_up.sh
+
+      - name: 'Running test on BrowserStack'  # Invokes the actual test script that would run on BrowserStack browsers
+        run: python3 browserstack_script.py  
+
+      - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: stop
+----
+====
+
+. To test the GitHub Actions workflow, make a minor change in the `README.adoc` file and push the changes to GitHub.
++
+[source,terminal]
+----
+$ git add .
+$ git commit -m "Testing GitHub Actions"
+$ git push origin main
+----
+
+. In your GitHub repository, navigate to **Settings** -> and observe the job logs.
+
+. In your BrowserStack dashboard, select the GitHub Actions build from the **All Builds** drop down list on the left navigation pane and observe the test status.
+
