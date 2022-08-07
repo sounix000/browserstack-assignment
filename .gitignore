@@ -1,4 +1,5 @@
 # Specific to this repository
+.vscode
 .env
 browserstack/
 
