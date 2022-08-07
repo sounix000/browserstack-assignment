@@ -1062,6 +1062,29 @@ $ git push origin main</code></pre>
 </li>
 <li>
 <p>In your GitHub repository, navigate to <strong>Actions</strong> &#8594; <strong>&lt;your_GitHub_Actions_job&gt;</strong> and observe the job logs.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>One of the common reasons of failure for this job is the the following error: <code>ModuleNotFoundError: No module named 'dotenv'</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/dotenv_error.png" alt="dotenv error">
+</div>
+</div>
+<div class="paragraph">
+<p>The failure happens due to this bug: <a href="https://github.com/theskumar/python-dotenv/issues/273">issue#273</a>.
+The bug is hard to reproduce, and currently has no known solutions that are universally applicable.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
 <p>In your BrowserStack dashboard, select the GitHub Actions build from the <strong>All Builds</strong> drop down list on the left navigation pane and observe the test status.</p>
