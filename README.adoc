@@ -6,8 +6,8 @@ Using Selenium (Python), BrowserStack, and GitHub Actions
 :source-highlighter: highlight.js
 
 == Overview
-Lorem Ipsum
 
+WORK IN PROGRESS
 
 
 == Prerequisites
@@ -21,6 +21,8 @@ Before starting with test automation scripts, ensure the following:
 * You have an active GitHub account. If not, link:https://github.com/signup[sign up^] for an account.
 
 * You have a basic idea about CI/CD pipelines.
+
+The ideal audience for this tutorial are professionals with experience in automated testing of websites and mobile applications.
 
 == Testing on a local machine
 
@@ -305,6 +307,7 @@ browser.close()
 ====
 
 == Integrating the script with BrowserStack
+
 After successfully testing the automation script on your local machine, you can integrate the script with BrowserStack.
 
 === Getting BrowserStack secrets
@@ -336,6 +339,7 @@ BROWSERSTACK_ACCESS_KEY="<your_browserstack_access_key>"
 ----
 
 === Modifying the test script
+
 You must modify the script to use BrowserStack's capabilities of running parallel tests on numerous device and browser combinations.
 
 The entire modified script named `browserstack_script.py` is given below:
