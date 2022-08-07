@@ -1,6 +1,6 @@
 # Import necessary packages
 import os, time
-from dotenv import load_dotenv
+from python-dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
