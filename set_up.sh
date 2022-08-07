@@ -10,14 +10,14 @@
 # Set up and activate a Python virtual environment in the project directory.
 # Assumption: You have already checked out the project repository from GitHub.
 cd browserstack-assignment/
-python -m venv browserstack
+python3 -m venv browserstack
 source browserstack/bin/activate
 
 # Install selenium v 4.1.0
-python -m pip install selenium==4.1.0
+python3 -m pip3 install selenium==4.1.0
 
 # Install python-dotenv package for handling environment variables from the test script
-python -m pip install python-dotenv
+python3 -m pip3 install python-dotenv
 
 # Note: Because the selenium webdrivers invoke headless Chrome and Firefox in the remote BrowserStack Cloud, 
 # the Ubuntu runner need not have the specific versions of Chrome and Firefox drivers as mentioned in `browserstack_script.py`.
