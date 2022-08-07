@@ -439,21 +439,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Analysis of BrowserStack documentation</h1>
 <div class="details">
 <span id="author" class="author">Exploring a few areas of improvement</span><br>
 </div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_principles_of_minimalism_are_not_followed">Principles of minimalism are not followed</a></li>
+<li><a href="#_section_headings_are_not_in_gerund_form">Section headings are not in gerund form</a></li>
+<li><a href="#_admonitions_are_misused">Admonitions are misused</a></li>
+<li><a href="#_some_unnecessary_images">Some unnecessary images</a></li>
+<li><a href="#_doc_site_uiux_can_be_improved">Doc site UI/UX can be improved</a></li>
+<li><a href="#_general_comment">General comment</a></li>
+<li><a href="#_bonus">Bonus</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>Based on my 30 minute analysis of <a href="https://www.browserstack.com/docs/" target="_blank" rel="noopener">BrowserStack&#8217;s documentation</a> and comparing with a <a href="https://www.lambdatest.com/support/docs/" target="_blank" rel="noopener">competitor&#8217;s documentation</a>, I don&#8217;t find anything that I strongly dislike. However, as a technical writer trained to pay attention to details, I have the following <strong>nitpicks</strong>:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Principles of minimalism are not followed.</strong> For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#prerequisites" target="_blank" rel="noopener">Getting started - Python - Prerequisites</a>, the first bullet point is verbose.</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_principles_of_minimalism_are_not_followed">Principles of minimalism are not followed</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#prerequisites" target="_blank" rel="noopener">Getting started - Python - Prerequisites</a>, the first bullet point is verbose.</p>
+</div>
 <div class="listingblock">
 <div class="title">Existing sentence</div>
 <div class="content">
@@ -469,9 +487,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>The suggestion also demonstrates restructuring of sentences to emphasize user&#8217;s actions, and brings more clarity.</p>
 </div>
-</li>
-<li>
-<p><strong>Section headings are not in gerund form.</strong> For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#run-your-first-test" target="_blank" rel="noopener">Getting started - Python - Run your first test</a>:</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_section_headings_are_not_in_gerund_form">Section headings are not in gerund form</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#run-your-first-test" target="_blank" rel="noopener">Getting started - Python - Run your first test</a>:</p>
+</div>
 <div class="listingblock">
 <div class="title">Existing section heading</div>
 <div class="content">
@@ -487,9 +510,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Gerund forms of phrases are appropriate for highlighting a process, which might contain several steps. For the steps, we can use action oriented sentences in simple present tense, such as "Create a sample test code file".</p>
 </div>
-</li>
-<li>
-<p><strong>Admonitions are misused.</strong> For example:</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_admonitions_are_misused">Admonitions are misused</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For example:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -510,9 +538,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><strong>Images could have been used more sparingly to avoid maintenance problems.</strong> This is even more important for images that represent products such as GitHub, which are beyond BrowserStack&#8217;s control. For example, the following image represents and old layout of the GitHub Actions web page:</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_some_unnecessary_images">Some unnecessary images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Images could have been used more sparingly to avoid maintenance problems.This is even more important for images that represent products such as GitHub, which are beyond BrowserStack&#8217;s control. For example, the following image represents and old layout of the GitHub Actions web page:</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="https://www.browserstack.com/docs/static/img/automate/selenium/github-actions/github-actions-2.png" alt="github actions 2">
@@ -521,9 +554,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>In addition, images without appropriate <code>alt-text</code> hampers accessibility and SEO.</p>
 </div>
-</li>
-<li>
-<p><strong>Doc site UI/UX can be improved.</strong> Modern documentation websites adopt a three-column approach: documentation suite TOC on the left, content in the middle, and current page TOC on the right. BrowserStack&#8217;s documentation website mostly leaves the right column blank. As a result, the left navigation panel looks more crowded and needs frequent scrolling.</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_doc_site_uiux_can_be_improved">Doc site UI/UX can be improved</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Modern documentation websites adopt a three-column approach: documentation suite TOC on the left, content in the middle, and current page TOC on the right. BrowserStack&#8217;s documentation website mostly leaves the right column blank. As a result, the left navigation panel looks more crowded and needs frequent scrolling.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/browserstack-doc.png" alt="browserstack doc">
@@ -536,14 +574,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="title">Figure 2. LambdaTest documentation site</div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_general_comment">General comment</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Some navigation links within the text/content are broken, especially the ones that navigates to different sections within the same article.</p>
 </li>
 <li>
-<p><strong>General comment</strong>: In lots of occasions, the writing style deviates significantly from Google&#8217;s documentation style guide. In fact, a seasoned writer can easily identify the documents contributed by developers, testers, product managers, or customer support. While this is not a big problem, the documentation experience can certainly be made more consistent.</p>
-</li>
-<li>
-<p><strong>Bonus</strong>: Modern test environments, especially in enterprise situations, are mostly containers running on clusters. If the onboarding docs describe procedures using containers, the onboarding experience and the documentation becomes more standardized and maintainable.</p>
+<p>In lots of occasions, the writing style deviates significantly from Google&#8217;s documentation style guide. In fact, a seasoned writer can easily identify the documents contributed by developers, testers, product managers, or customer support. While this is not a big problem, the documentation experience can certainly be made more consistent.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bonus">Bonus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Modern test environments, especially in enterprise situations, are mostly containers running on clusters. If the onboarding docs describe procedures using containers, the onboarding experience and the documentation becomes more standardized and maintainable.</p>
+</div>
+</div>
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
