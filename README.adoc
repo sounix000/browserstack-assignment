@@ -179,7 +179,7 @@ $ python local_script.py
 
 The `local_script.py` Python script facilitates testing the Amazon **Sign in** page on your local machine, without involving BrowserStack. The script sequentially performs the following operations:
 
-. Import necessary Python packages.
+* Import necessary Python packages.
 +
 .Code
 [%collapsible]
@@ -193,7 +193,7 @@ from dotenv import load_dotenv
 ----
 ====
 
-. Define a function that mimics the human typing of username, password, and other such fields on a web page.
+* Define a function that mimics the human typing of username, password, and other such fields on a web page.
 +
 .Code
 [%collapsible]
@@ -208,7 +208,7 @@ def slow_typing(element, text):
 ----
 ====
 
-. Define the Amazon website URL.
+* Define the Amazon website URL.
 +
 .Code
 [%collapsible]
@@ -221,7 +221,7 @@ AMZ_URL = "https://amazon.in/"
 ----
 ====
 
-. Access the email id and password for the Amazon account used for test.
+* Access the email id and password for the Amazon account used for test.
 +
 .Code
 [%collapsible]
@@ -237,7 +237,7 @@ AMAZON_PASSWORD = os.environ.get("AMAZON_PASSWORD")
 ----
 ====
 
-. Open the Amazon sign in page in the Goggle Chrome browser.
+* Open the Amazon sign in page in the Goggle Chrome browser.
 +
 .Code
 [%collapsible]
@@ -254,7 +254,7 @@ time.sleep(2)
 ----
 ====
 
-. Enter the sign in credentials while mimicking human interaction with the website.
+* Enter the sign in credentials while mimicking human interaction with the website.
 +
 .Code
 [%collapsible]
