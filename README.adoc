@@ -47,7 +47,7 @@ Before starting with test automation, ensure the following:
 
 * You have an active GitHub account. If not, link:https://github.com/signup[sign up^] for an account.
 
-* You have a basic idea about CI/CD pipelines.
+* You have a basic idea about Continuous Integration (CI) pipelines.
 
 The ideal audience for this tutorial are professionals with interest or experience in automated testing of websites and mobile applications.
 
@@ -489,7 +489,9 @@ image::./images/browserstack_builds.png[BrowserStack Dashboard]
 
 == Automatically running the modified script using GitHub Actions
 
-You can     
+Using GitHub Actions, set up a CI pipeline such that each push or pull request to the project's GitHub repository triggers the tests to run on BrowserStack. 
+
+.Procedure
 
 . In your forked repository on GitHub, navigate to **Settings** -> **Secrets** (left navigation pane) -> **Actions** -> **New repository secret**.
 
