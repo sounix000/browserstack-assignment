@@ -247,7 +247,7 @@ browser.close()
 
 For convenience, the entire script is given below:
 
-.Code
+.local_script.py
 [%collapsible]
 ====
 [,python]
