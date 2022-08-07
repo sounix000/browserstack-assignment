@@ -437,6 +437,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
 <body class="article">
 <div id="header">
@@ -452,17 +453,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>Principles of minimalism are not followed. For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#prerequisites" target="_blank" rel="noopener">Getting started - Python - Prerequisites</a>, the first bullet point is verbose.</p>
+<p><strong>Principles of minimalism are not followed.</strong> For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#prerequisites" target="_blank" rel="noopener">Getting started - Python - Prerequisites</a>, the first bullet point is verbose.</p>
 <div class="listingblock">
 <div class="title">Existing sentence</div>
 <div class="content">
-<pre class="highlight"><code>You need to have BrowserStack Username and Access key, which you can find in your account settings. If you have not created an account yet, you can sign up for a Free Trial or purchase a plan.</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">You need to have BrowserStack Username and Access key, which you can find in your account settings. If you have not created an account yet, you can sign up for a Free Trial or purchase a plan.</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Suggested sentence</div>
 <div class="content">
-<pre class="highlight"><code>Note your BrowserStack Username and Access key from the account settings. Unregistered users can sign up for a trial account or purchase a plan.</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">Note your BrowserStack Username and Access key from the account settings. Unregistered users can sign up for a trial account or purchase a plan.</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -470,17 +471,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>Section headings are not in gerund form. For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#run-your-first-test" target="_blank" rel="noopener">Getting started - Python - Run your first test</a>:</p>
+<p><strong>Section headings are not in gerund form.</strong> For example, in <a href="https://www.browserstack.com/docs/automate/selenium/getting-started/python#run-your-first-test" target="_blank" rel="noopener">Getting started - Python - Run your first test</a>:</p>
 <div class="listingblock">
 <div class="title">Existing section heading</div>
 <div class="content">
-<pre class="highlight"><code>Run your first test</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">Run your first test</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Suggested section heading</div>
 <div class="content">
-<pre class="highlight"><code>Running your first test</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">Running your first test</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -488,7 +489,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>Admonitions are misused. For example:</p>
+<p><strong>Admonitions are misused.</strong> For example:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -511,7 +512,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>Images could have been used more sparingly to avoid maintenance problems. This is even more important for images that represent products such as GitHub, which are beyond BrowserStack&#8217;s control. For example, the following image represents and old layout of the GitHub Actions web page:</p>
+<p><strong>Images could have been used more sparingly to avoid maintenance problems.</strong> This is even more important for images that represent products such as GitHub, which are beyond BrowserStack&#8217;s control. For example, the following image represents and old layout of the GitHub Actions web page:</p>
 <div class="imageblock">
 <div class="content">
 <img src="https://www.browserstack.com/docs/static/img/automate/selenium/github-actions/github-actions-2.png" alt="github actions 2">
@@ -522,7 +523,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>Modern documentation websites adopt a three-column approach: documentation suite TOC on the left, content in the middle, and current page TOC on the right. BrowserStack&#8217;s documentation website mostly leaves the right column blank. As a result, the left navigation panel looks more crowded and needs frequent scrolling.</p>
+<p><strong>Doc site UI/UX can be improved.</strong> Modern documentation websites adopt a three-column approach: documentation suite TOC on the left, content in the middle, and current page TOC on the right. BrowserStack&#8217;s documentation website mostly leaves the right column blank. As a result, the left navigation panel looks more crowded and needs frequent scrolling.</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/browserstack-doc.png" alt="browserstack doc">
@@ -545,10 +546,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 </div>
-<div id="footer">
-<div id="footer-text">
-Last updated 2022-08-08 00:04:09 +0530
-</div>
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

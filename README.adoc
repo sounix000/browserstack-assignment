@@ -5,11 +5,17 @@ Using Selenium (Python), BrowserStack, and GitHub Actions
 :toclevels: 4
 :source-highlighter: highlight.js
 
+== Context
+
+=== Challenges in QA automation
+
 Automated testing of modern websites and mobile applications poses the following primary challenges:
 
 * The tests must run on numerous combinations of devices and browsers in parallel to speed up the process
 * The tests must be triggered for each new build of the application, or for each new code submission by developers
 * Logging and observability of test runs must be transparent, and the test results accessible from a single platform
+
+=== BrowserStack's offerings
 
 link:https://www.browserstack.com/[BrowserStack^] solves these problems by offering the following:
 
