@@ -5,8 +5,6 @@ Using Selenium (Python), BrowserStack, and GitHub Actions
 :toclevels: 4
 :source-highlighter: highlight.js
 
-== Overview
-
 Automated testing of modern websites and mobile applications poses the following primary challenges:
 
 * The tests must run on numerous combinations of devices and browsers in parallel to speed up the process
@@ -24,7 +22,7 @@ link:https://www.browserstack.com/[BrowserStack^] solves these problems by offer
 * Detailed documentation and support for everything you can do with BrowserStack
 * Transparent and reasonable link:https://www.browserstack.com/accounts/subscriptions[pricing^] for individual users, small teams, and enterprises
 
-=== Objectives
+== Objectives
 
 This tutorial helps you familiarize with BrowserStack's capabilities, so that you can easily adopt BrowserStack for testing websites and mobile applications. In particular, you will learn about the following:
 
@@ -37,7 +35,7 @@ This tutorial helps you familiarize with BrowserStack's capabilities, so that yo
 The code samples used in this tutorial are for demonstration only; **do not** use them in production scenarios.
 ====
 
-=== Prerequisites
+== Prerequisites
 
 Before starting with test automation, ensure the following:
 
