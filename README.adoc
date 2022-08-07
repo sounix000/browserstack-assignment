@@ -21,12 +21,12 @@ link:https://www.browserstack.com/[BrowserStack^] solves these problems by offer
 * Comprehensive and detailed reports and logs for each test session in a single dashboard
 * Support for automated testing pipelines for all common CI/CD technologies 
 * Intuitive management of users, permissions, and large scale testing infrastructure
-* Fantastic documentation and support for everything you can do with BrowserStack
+* Detailed documentation and support for everything you can do with BrowserStack
 * Transparent and reasonable link:https://www.browserstack.com/accounts/subscriptions[pricing^] for individual users, small teams, and enterprises
 
 === Objectives
 
-The goal of this tutorial is to make you familiar with BrowserStack's capabilities, so that you can easily adopt BrowserStack for testing websites and mobile applications. In particular, you will learn about the following:
+This tutorial helps you familiarize with BrowserStack's capabilities, so that you can easily adopt BrowserStack for testing websites and mobile applications. In particular, you will learn about the following:
 
 * Creating and running a test automation script using Python and Selenium on your local machine
 * Adapting the script to use BrowserStack's capabilities, and running tests remotely on BrowserStack
@@ -542,7 +542,7 @@ jobs:
 ----
 ====
 
-. To test the GitHub Actions workflow, make a minor change in the `README.adoc` file and push the changes to GitHub.
+. To test the GitHub Actions workflow, make a minor modification in the project and push the changes to GitHub.
 +
 [source,terminal]
 ----
@@ -555,12 +555,12 @@ $ git push origin main
 +
 [NOTE]
 ====
-One of the common reasons of failure for this job is the the following error: `ModuleNotFoundError: No module named 'dotenv'`.
+One of the common reasons of failure for `browserstack_actions.yml` workflow is the the following error: `ModuleNotFoundError: No module named 'dotenv'`.
 
 image::images/dotenv_error.png[]
 
 The failure happens due to this bug: link:https://github.com/theskumar/python-dotenv/issues/273[issue#273^].
-The bug is hard to reproduce, and currently has no known solutions that are universally applicable.
+The bug is not easily reproducible, and currently has no known solutions that are universally applicable.
 ====
 
 . In your BrowserStack dashboard, select the GitHub Actions build from the **All Builds** drop down list on the left navigation pane, and observe the test status.
