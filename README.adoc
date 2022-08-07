@@ -484,7 +484,7 @@ $ git commit -m "Testing GitHub Actions"
 $ git push origin main
 ----
 
-. In your GitHub repository, navigate to **Settings** -> and observe the job logs.
+. In your GitHub repository, navigate to **Actions** -> **<your_GitHub_Actions_job>** and observe the job logs.
 
 . In your BrowserStack dashboard, select the GitHub Actions build from the **All Builds** drop down list on the left navigation pane and observe the test status.
 
