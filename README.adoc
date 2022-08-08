@@ -479,6 +479,15 @@ for cap in capabilities:
 ----
 ====
 
+=== Running the modified script on BrowserStack
+
+Run the `browserstack_script.py` file.
++
+[source,terminal]
+----
+$ python browserstack_script.py
+----
+
 === Observing test results in BrowserStack dashboard
 
 You can monitor tests, inspect logs, and access other details of test sessions using the BrowserStack dashboard.
