@@ -482,7 +482,7 @@ for cap in capabilities:
 === Running the modified script on BrowserStack
 
 Run the `browserstack_script.py` file.
-+
+
 [source,terminal]
 ----
 $ python browserstack_script.py
