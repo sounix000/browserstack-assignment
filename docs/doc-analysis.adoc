@@ -57,7 +57,7 @@ image::images/protip.png[]
 
 == Some unnecessary images
 
-Images could have been used more sparingly to avoid maintenance problems.This is even more important for images that represent products such as GitHub, which are beyond BrowserStack's control. For example, the following image represents and old layout of the GitHub Actions web page:
+Images could have been used more sparingly to avoid maintenance problems.This is even more important for images that represent products such as GitHub, which are beyond BrowserStack's control. For example, the following image represents an old layout of the GitHub Actions web page:
 
 image::https://www.browserstack.com/docs/static/img/automate/selenium/github-actions/github-actions-2.png[]
 
